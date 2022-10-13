@@ -9,6 +9,7 @@ public class Server {
     public static final DateTimeFormatter dfm = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
 
     public static void main(String[] args) {
+        Logger logger = Logger.getInstance();
 
         System.out.println("Hello! Server start!");
         String host = "127.0.0.1\n";
@@ -33,10 +34,14 @@ public class Server {
 
                 System.out.println("Новый пользователь! Порт подключения >> " + clientSocket.getPort());
                 final String name = in.readLine();
-                out.println(String.format("[%s] Привет %s! Твой порт подключения: [%d]",
-                        dfm.format(LocalDateTime.now()),
+//                out.println(String.format("[%s] Привет %s! Твой порт подключения: [%d]",
+//                        dfm.format(LocalDateTime.now()),
+//                        name,
+//                        clientSocket.getPort()));
+
+                out.println(logger.log(String.format("В чат вошёл(ла) %s! Твой порт подключения: [%d]",
                         name,
-                        clientSocket.getPort()));
+                        clientSocket.getPort())));
             }
         } catch (IOException e) {
             e.printStackTrace();

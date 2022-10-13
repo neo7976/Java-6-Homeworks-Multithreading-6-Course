@@ -14,6 +14,7 @@ public class Client {
     }
 
     public static void main(String[] args) {
+        Logger logger = Logger.getInstance();
         String host1 = null;
         int port1 = 0;
 
@@ -52,6 +53,9 @@ public class Client {
                 out.println(msg);
             }
             System.out.println("Вы вышли из чата!");
+
+            //логер начинает с 1
+//            System.out.println(logger.log("Вы вышли из чата!"));
 
 
         } catch (
