@@ -14,7 +14,7 @@ public class Client {
     }
 
     public static void main(String[] args) {
-        Logger logger = Logger.getInstance();
+        MyLogger myLogger = MyLogger.getInstance();
         String host1 = null;
         int port1 = 0;
 

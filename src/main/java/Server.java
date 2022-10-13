@@ -1,7 +1,6 @@
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class Server {
@@ -9,7 +8,7 @@ public class Server {
     public static final DateTimeFormatter dfm = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
 
     public static void main(String[] args) {
-        Logger logger = Logger.getInstance();
+        MyLogger myLogger = MyLogger.getInstance();
 
         System.out.println("Hello! Server start!");
         String host = "127.0.0.1\n";
@@ -39,7 +38,7 @@ public class Server {
 //                        name,
 //                        clientSocket.getPort()));
 
-                out.println(logger.log(String.format("В чат вошёл(ла) %s! Твой порт подключения: [%d]",
+                out.println(myLogger.log(String.format("В чат вошёл(ла) %s! Твой порт подключения: [%d]",
                         name,
                         clientSocket.getPort())));
             }
