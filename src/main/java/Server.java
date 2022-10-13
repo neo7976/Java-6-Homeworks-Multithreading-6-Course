@@ -14,12 +14,18 @@ public class Server {
         String host = "127.0.0.1\n";
         int port = 1254;
 
-        try (FileWriter writer = new FileWriter("src/main/resources/settings.txt", false);
-             ServerSocket serverSocket = new ServerSocket(port)) {
+        try (FileWriter writer = new FileWriter("src/main/resources/settings.txt", false)) {
+            writer.write("host: " + host);
+            writer.write("port: " + String.valueOf(port) + "\n");
+            writer.flush();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        //todo будет как отдельный поток в будущем для новых пользователей
+        try (ServerSocket serverSocket = new ServerSocket(port)) {
             while (true) {
-                writer.write("host: " + host);
-                writer.write("port: " + String.valueOf(port) + "\n");
-                writer.flush();
 
                 Socket clientSocket = serverSocket.accept();
                 PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
@@ -32,11 +38,12 @@ public class Server {
                         name,
                         clientSocket.getPort()));
             }
-
-
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        //todo следует сделать реализацию для прочтения сообщения и записи в файл
+
 
     }
 }

@@ -4,8 +4,6 @@ import java.util.Scanner;
 
 public class Client {
     public static void main(String[] args) {
-//        String host = "127.0.0.1";
-//        int port = 1254;
         String host1 = null;
         int port1 = 0;
 
@@ -26,7 +24,6 @@ public class Client {
         System.out.println("host подключения: " + host1);
         System.out.println("port подключения: " + port1);
 
-        //при каждом подключении почему добавляется номер хоста и порта в настройки
         try (Socket client = new Socket(host1, port1);
              PrintWriter out = new PrintWriter(client.getOutputStream(), true);
              BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()))) {
