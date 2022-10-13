@@ -3,6 +3,16 @@ import java.net.Socket;
 import java.util.Scanner;
 
 public class Client {
+    private static String userName = "Аноним";
+
+    public static String getUserName() {
+        return userName;
+    }
+
+    public static void setUserName(String userName) {
+        Client.userName = userName;
+    }
+
     public static void main(String[] args) {
         String host1 = null;
         int port1 = 0;
@@ -30,8 +40,8 @@ public class Client {
 
             Scanner scanner = new Scanner(System.in);
             System.out.println("\nВведи свое имя для знакомства с сервером");
-            String name = scanner.nextLine();
-            out.println(name);
+            setUserName(scanner.nextLine());
+            out.println(getUserName());
             System.out.println(in.readLine());
 
             while (true) {
