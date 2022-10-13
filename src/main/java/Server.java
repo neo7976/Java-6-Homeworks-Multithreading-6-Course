@@ -45,7 +45,8 @@ public class Server {
                 BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
                 final String name = in.readLine();
-                LOGGER.log(Level.INFO, "К чату подключился пользователь >> " + name + "! Порт подключения >> "+ clientSocket.getPort());
+                String msg = "К чату подключился пользователь >> " + name + "! Порт подключения >> " + clientSocket.getPort();
+                LOGGER.log(Level.INFO, msg);
                 out.println(myLogger.log(String.format("В чат вошёл(ла) %s! Твой порт подключения: [%d]",
                         name,
                         clientSocket.getPort())));
