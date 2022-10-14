@@ -2,12 +2,25 @@ package thread;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class MonoThreadClientHandler implements Runnable {
     private static Socket clientDialog;
+    Logger LOGGER;
+//
+//    static {
+//        try (FileInputStream ins = new FileInputStream("src/main/resources/log.config")) {
+//            LogManager.getLogManager().readConfiguration(ins);
+//            LOGGER = Logger.getLogger(MonoThreadClientHandler.class.getName());
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
-    public MonoThreadClientHandler(Socket client) {
+    public MonoThreadClientHandler(Socket client, Logger LOGGER) {
         MonoThreadClientHandler.clientDialog = client;
+        this.LOGGER = LOGGER;
     }
 
     @Override
@@ -33,7 +46,8 @@ public class MonoThreadClientHandler implements Runnable {
                 //не получили выход, значит работаем
                 System.out.println("Сервер готов записывать....");
 //                out.writeUTF("Сервер ожидает - " + msg + " - ОК");
-                out.println("Сервер ожидает - " + msg + " - ОК");
+                out.println(msg + " - ОК");
+                LOGGER.log(Level.INFO, msg);
                 System.out.println("Сервер записал сообщение");
                 //освобождаем буфер
                 out.flush();

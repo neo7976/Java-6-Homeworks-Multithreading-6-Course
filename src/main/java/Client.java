@@ -36,110 +36,65 @@ public class Client {
         System.out.println("port подключения: " + port1);
 
         try (Socket socketClient = new Socket(host1, port1);
-             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-//             DataOutputStream oos = new DataOutputStream(socketClient.getOutputStream());
+//             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
              PrintWriter out = new PrintWriter(socketClient.getOutputStream(), true);
-//             DataInputStream ois = new DataInputStream(socketClient.getInputStream()))
              BufferedReader in = new BufferedReader(new InputStreamReader(socketClient.getInputStream()))) {
 
             System.out.println("Клиент подключился to socketClient.");
             Scanner scanner = new Scanner(System.in);
             System.out.println("\nВведи свое имя для знакомства с сервером");
-            String name = scanner.nextLine();
-
-            out.println(name);
+            setUserName(scanner.nextLine());
+            out.println("К чату подключился: >>\"" + getUserName() + "\" [" + socketClient.getPort() + "]");
             out.flush();
             Thread.sleep(1000);
             if (in.read() > -1) {
-                System.out.println("reading...");
-//                            String msgServ= ois.readUTF();
-                String msgServ = in.readLine();
-                System.out.println(msgServ);
+                msgFromServer(in);
             }
-            // проверяем живой ли канал и работаем если живой
-//            while (!socketClient.isOutputShutdown()) {
             while (true) {
                 // ждём консоли клиента на предмет появления в ней данных
-                System.out.println("Введите команду");
+                System.out.println("Введите сообщение:");
                 String msg = scanner.nextLine();
-                // данные появились - работаем
-                System.out.println("Client start writing in channel...");
                 Thread.sleep(1000);
 
                 // пишем данные с консоли в канал сокета для сервера
-//                    oos.writeUTF(clientCommand);
-//                    oos.flush();
-                out.println(msg);
+                out.printf("(%s - [%s]) %s\n", getUserName(), socketClient.getPort(), msg);
                 out.flush();
-                System.out.println("Clien sent message " + msg + " to server.");
+                System.out.println("Вы:" + msg);
                 Thread.sleep(1000);
 
-
 // ждём чтобы сервер успел прочесть сообщение из сокета и ответить
-
 // проверяем условие выхода из соединения
-            if (msg.equalsIgnoreCase("/end")) {
-
-// если условие выхода достигнуто разъединяемся
-                System.out.println("Client kill connections");
-                Thread.sleep(2000);
-
+                if (msg.equalsIgnoreCase("/end")) {
+                    System.out.println("Client kill connections");
+                    Thread.sleep(2000);
 // смотрим что нам ответил сервер на последок перед закрытием ресурсов)
-                if (in.read() > -1) {
-                    System.out.println("reading...");
-//                            String msgServ= ois.readUTF();
-                    String msgServ = in.readLine();
-                    System.out.println(msgServ);
+                    if (in.read() > -1) {
+                        msgFromServer(in);
+                    }
+                    break;
                 }
-// после предварительных приготовлений выходим из цикла записи чтения
-                break;
-            }
 
 // если условие разъединения не достигнуто продолжаем работу
-            System.out.println("Client sent message & start waiting for data from server...");
-            Thread.sleep(2000);
-
-            // проверяем, что нам ответит сервер на сообщение(за предоставленное ему время в паузе он должен был успеть ответить)
-            if (in.read() > -1) {
-                System.out.println("reading...");
-//                            String msgServ= ois.readUTF();
-                String msgServ = in.readLine();
-                System.out.println(msgServ);
+                System.out.println("Ждём ответа от сервера...");
+                Thread.sleep(2000);
+// проверяем, что нам ответит сервер на сообщение(за предоставленное ему время в паузе он должен был успеть ответить)
+                if (in.read() > -1) {
+                    msgFromServer(in);
+                }
             }
-        }
 // на выходе из цикла общения закрываем свои ресурсы
-        System.out.println("Closing connections & channels on clentSide - DONE.");
+            System.out.println("Закрытие канала соединения - ВЫПОЛНЕНО.");
 
-
-//        try (Socket client = new Socket(host1, port1);
-//             PrintWriter out = new PrintWriter(client.getOutputStream(), true);
-//             BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()))) {
-//
-//            Scanner scanner = new Scanner(System.in);
-//            System.out.println("\nВведи свое имя для знакомства с сервером");
-//            setUserName(scanner.nextLine());
-//            out.println(getUserName());
-//            System.out.println(in.readLine());
-//
-//            while (true) {
-//                System.out.println("Введите сообщение или \"end\" для завершения сеанса");
-//                String msg = scanner.nextLine();
-//                if (msg.toLowerCase().equals("end"))
-//                    break;
-//                out.println(msg);
-//            }
-//            System.out.println("Вы вышли из чата!");
-//
-//            //логер начинает с 1
-////            System.out.println(logger.log("Вы вышли из чата!"));
-
-
-    } catch(
-    IOException |
-    InterruptedException e)
-
-    {
-        e.printStackTrace();
+        } catch (
+                IOException |
+                        InterruptedException e) {
+            e.printStackTrace();
+        }
     }
-}
+
+    private static void msgFromServer(BufferedReader in) throws IOException {
+        System.out.println("ожидание...");
+        String msgServ = in.readLine();
+        System.out.println(msgServ);
+    }
 }

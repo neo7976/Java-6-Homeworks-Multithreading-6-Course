@@ -4,6 +4,7 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.time.format.DateTimeFormatter;
+import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.logging.Level;
@@ -16,20 +17,20 @@ public class Server {
     public static final DateTimeFormatter dfm = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
     public static ExecutorService executeIt = Executors.newFixedThreadPool(2);
 
-//    static Logger LOGGER;
-//
-//    static {
-//        try (FileInputStream ins = new FileInputStream("src/main/resources/log.config")) {
-//            LogManager.getLogManager().readConfiguration(ins);
-//            LOGGER = Logger.getLogger(Server.class.getName());
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
+    static Logger LOGGER;
+
+    static {
+        try (FileInputStream ins = new FileInputStream("src/main/resources/log.config")) {
+            LogManager.getLogManager().readConfiguration(ins);
+            LOGGER = Logger.getLogger(Server.class.getName());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     public static void main(String[] args) {
         MyLogger myLogger = MyLogger.getInstance();
-//        LOGGER.log(Level.INFO, "Hello! Server start!");
+        LOGGER.log(Level.INFO, "Hello! Server start!");
 
         String host = "127.0.0.1\n";
         int port = 1254;
@@ -45,13 +46,17 @@ public class Server {
 
         try (ServerSocket serverSocket = new ServerSocket(port);
              BufferedReader bf = new BufferedReader(new InputStreamReader(System.in))) {
+//             Scanner sc = new Scanner(System.in)) {
             System.out.println("Server socket created, command console reader for listen to server commands");
             while (!serverSocket.isClosed()) {
+                //todo не работает завершение сервера
                 if (bf.ready()) {
+//                if (sc.hasNextLine()) {
                     System.out.println("Сервер нашёл команды!");
                     Thread.sleep(1000);
-                    String msg = bf.readLine();
-                    if (msg.equalsIgnoreCase("end")) {
+                    String serverCommand = bf.readLine();
+//                    String serverCommand = sc.nextLine();
+                    if (serverCommand.equalsIgnoreCase("end")) {
                         System.out.println("Сервер инициализирует выход");
                         serverSocket.close();
                         break;
@@ -66,7 +71,7 @@ public class Server {
                 // в Runnable(при необходимости можно создать Callable)
                 // монопоточную нить = сервер - MonoThreadClientHandler и тот
                 // продолжает общение от лица сервера
-                executeIt.execute(new MonoThreadClientHandler(clientSocket));
+                executeIt.execute(new MonoThreadClientHandler(clientSocket, LOGGER));
                 System.out.println("Подключение установлено");
             }
             //завершаем пол нитей после завершения всех нитей
@@ -89,9 +94,6 @@ public class Server {
 //        } catch (IOException e) {
 //            e.printStackTrace();
 //        }
-
-        //todo следует сделать реализацию для прочтения сообщения и записи в файл
-
 
     }
 }
