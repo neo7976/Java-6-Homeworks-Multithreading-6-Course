@@ -10,11 +10,11 @@ public class Client {
     }
 
     public static void setUserName(String userName) {
-        Client.userName = userName;
+        if (!userName.trim().isEmpty())
+            Client.userName = userName;
     }
 
     public static void main(String[] args) {
-        MyLogger myLogger = MyLogger.getInstance();
         String host1 = null;
         int port1 = 0;
 
@@ -44,7 +44,7 @@ public class Client {
             Scanner scanner = new Scanner(System.in);
             System.out.println("\nВведи свое имя для знакомства с сервером");
             setUserName(scanner.nextLine());
-            out.println("К чату подключился: >>\"" + getUserName() + "\" [" + socketClient.getPort() + "]");
+            out.println(">>К чату подключился: >>\"" + getUserName() + "\" [" + socketClient.getPort() + "]");
             out.flush();
             Thread.sleep(1000);
             if (in.read() > -1) {
@@ -57,7 +57,7 @@ public class Client {
                 Thread.sleep(1000);
 
                 // пишем данные с консоли в канал сокета для сервера
-                out.printf("(%s - [%s]) %s\n", getUserName(), socketClient.getPort(), msg);
+                out.printf(">>>%s[%s]: %s\n", getUserName(), socketClient.getPort(), msg);
                 out.flush();
                 System.out.println("Вы:" + msg);
                 Thread.sleep(1000);

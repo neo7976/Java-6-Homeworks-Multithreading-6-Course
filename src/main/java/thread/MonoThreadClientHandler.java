@@ -36,6 +36,9 @@ public class MonoThreadClientHandler implements Runnable {
                 final String msg = in.readLine();
                 System.out.println("Прочитали сообщение: " + msg);
 
+                //todo доработать выход, так как цепляется имя,
+                // попробовать перебить и хранить здесь порт и имя пользователя
+
                 if (msg.equalsIgnoreCase("/end")) {
                     System.out.println("Подключение разорвано...");
                     out.println("Сервер ожидает - " + msg + " - ОК");
