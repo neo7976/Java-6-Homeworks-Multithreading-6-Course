@@ -37,66 +37,78 @@ public class Client {
 
         try (Socket socketClient = new Socket(host1, port1);
              BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-             DataOutputStream oos = new DataOutputStream(socketClient.getOutputStream());
-             DataInputStream ois = new DataInputStream(socketClient.getInputStream())) {
+//             DataOutputStream oos = new DataOutputStream(socketClient.getOutputStream());
+             PrintWriter out = new PrintWriter(socketClient.getOutputStream(), true);
+//             DataInputStream ois = new DataInputStream(socketClient.getInputStream()))
+             BufferedReader in = new BufferedReader(new InputStreamReader(socketClient.getInputStream()))) {
 
-            System.out.println("Client connected to socketClient.");
-            System.out.println();
-            System.out.println("Client writing channel = oos & reading channel = ois initialized.");
+            System.out.println("Клиент подключился to socketClient.");
             Scanner scanner = new Scanner(System.in);
             System.out.println("\nВведи свое имя для знакомства с сервером");
+            String name = scanner.nextLine();
 
+            out.println(name);
+            out.flush();
+            Thread.sleep(1000);
+            if (in.read() > -1) {
+                System.out.println("reading...");
+//                            String msgServ= ois.readUTF();
+                String msgServ = in.readLine();
+                System.out.println(msgServ);
+            }
             // проверяем живой ли канал и работаем если живой
 //            while (!socketClient.isOutputShutdown()) {
             while (true) {
                 // ждём консоли клиента на предмет появления в ней данных
-                if (br.ready()) {
-                    // данные появились - работаем
-                    System.out.println("Client start writing in channel...");
-                    Thread.sleep(1000);
-                    String clientCommand = br.readLine();
+                System.out.println("Введите команду");
+                String msg = scanner.nextLine();
+                // данные появились - работаем
+                System.out.println("Client start writing in channel...");
+                Thread.sleep(1000);
 
-                    // пишем данные с консоли в канал сокета для сервера
-                    oos.writeUTF(clientCommand);
-                    oos.flush();
-                    System.out.println("Clien sent message " + clientCommand + " to server.");
-                    Thread.sleep(1000);
+                // пишем данные с консоли в канал сокета для сервера
+//                    oos.writeUTF(clientCommand);
+//                    oos.flush();
+                out.println(msg);
+                out.flush();
+                System.out.println("Clien sent message " + msg + " to server.");
+                Thread.sleep(1000);
+
+
 // ждём чтобы сервер успел прочесть сообщение из сокета и ответить
 
 // проверяем условие выхода из соединения
-                    if (clientCommand.equalsIgnoreCase("/end")) {
+            if (msg.equalsIgnoreCase("/end")) {
 
 // если условие выхода достигнуто разъединяемся
-                        System.out.println("Client kill connections");
-                        Thread.sleep(2000);
+                System.out.println("Client kill connections");
+                Thread.sleep(2000);
 
 // смотрим что нам ответил сервер на последок перед закрытием ресурсов)
-                        if (ois.read() > -1) {
-                            System.out.println("reading...");
-                            String in = ois.readUTF();
-                            System.out.println(in);
-                        }
+                if (in.read() > -1) {
+                    System.out.println("reading...");
+//                            String msgServ= ois.readUTF();
+                    String msgServ = in.readLine();
+                    System.out.println(msgServ);
+                }
 // после предварительных приготовлений выходим из цикла записи чтения
-                        break;
-                    }
+                break;
+            }
 
 // если условие разъединения не достигнуто продолжаем работу
-                    System.out.println("Client sent message & start waiting for data from server...");
-                    Thread.sleep(2000);
+            System.out.println("Client sent message & start waiting for data from server...");
+            Thread.sleep(2000);
 
-                    // проверяем, что нам ответит сервер на сообщение(за предоставленное ему время в паузе он должен был успеть ответить)
-                    if (ois.read() > -1) {
-
-                        // todo почему-то зависает(если успел забираем ответ из канала сервера в сокете и сохраняем её в ois переменную,
-                        //  печатаем на свою клиентскую консоль)
-                        System.out.println("reading...");
-                        String in = ois.readUTF();
-                        System.out.println(in);
-                    }
-                }
+            // проверяем, что нам ответит сервер на сообщение(за предоставленное ему время в паузе он должен был успеть ответить)
+            if (in.read() > -1) {
+                System.out.println("reading...");
+//                            String msgServ= ois.readUTF();
+                String msgServ = in.readLine();
+                System.out.println(msgServ);
             }
+        }
 // на выходе из цикла общения закрываем свои ресурсы
-            System.out.println("Closing connections & channels on clentSide - DONE.");
+        System.out.println("Closing connections & channels on clentSide - DONE.");
 
 
 //        try (Socket client = new Socket(host1, port1);
@@ -122,9 +134,12 @@ public class Client {
 ////            System.out.println(logger.log("Вы вышли из чата!"));
 
 
-        } catch (
-                IOException | InterruptedException e) {
-            e.printStackTrace();
-        }
+    } catch(
+    IOException |
+    InterruptedException e)
+
+    {
+        e.printStackTrace();
     }
+}
 }
