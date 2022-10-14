@@ -31,12 +31,12 @@ public class Server {
         MyLogger myLogger = MyLogger.getInstance();
 //        LOGGER.log(Level.INFO, "Hello! Server start!");
 
-        String host = "127.0.0.1";
+        String host = "127.0.0.1\n";
         int port = 1254;
 
         try (FileWriter writer = new FileWriter("src/main/resources/settings.txt", false)) {
             writer.write("host: " + host);
-            writer.write("port: " + String.valueOf(port) + "\n");
+            writer.write("port: " + String.valueOf(port));
             writer.flush();
 
         } catch (IOException e) {
