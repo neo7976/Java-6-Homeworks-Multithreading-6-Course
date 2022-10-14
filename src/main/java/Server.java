@@ -4,7 +4,6 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.time.format.DateTimeFormatter;
-import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.logging.Level;
@@ -15,7 +14,7 @@ public class Server {
 
     //todo потом подправить на все действующие потоки
     public static final DateTimeFormatter dfm = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-    public static ExecutorService executeIt = Executors.newFixedThreadPool(2);
+    public static ExecutorService executeIt = Executors.newFixedThreadPool(10);
 
     static Logger LOGGER;
 
@@ -79,21 +78,5 @@ public class Server {
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
-
-
-//                PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
-//                BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-//
-//                final String name = in.readLine();
-//                String msg = "К чату подключился пользователь >> " + name + "! Порт подключения >> " + clientSocket.getPort();
-//                LOGGER.log(Level.INFO, msg);
-//                out.println(myLogger.log(String.format("В чат вошёл(ла) %s! Твой порт подключения: [%d]",
-//                        name,
-//                        clientSocket.getPort())));
-//            }
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-
     }
 }

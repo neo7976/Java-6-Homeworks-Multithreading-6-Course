@@ -39,25 +39,24 @@ public class Client {
 //             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
              PrintWriter out = new PrintWriter(socketClient.getOutputStream(), true);
              BufferedReader in = new BufferedReader(new InputStreamReader(socketClient.getInputStream()))) {
-
             System.out.println("Клиент подключился to socketClient.");
+
             Scanner scanner = new Scanner(System.in);
             System.out.println("\nВведи свое имя для знакомства с сервером");
             setUserName(scanner.nextLine());
-            out.println(">>К чату подключился: >>\"" + getUserName() + "\" [" + socketClient.getPort() + "]");
+            out.println(getUserName());
             out.flush();
             Thread.sleep(1000);
-            if (in.read() > -1) {
-                msgFromServer(in);
-            }
+//            if (in.read() > -1) {
+//                msgFromServer(in);
+//            }
             while (true) {
                 // ждём консоли клиента на предмет появления в ней данных
                 System.out.println("Введите сообщение:");
                 String msg = scanner.nextLine();
                 Thread.sleep(1000);
 
-                // пишем данные с консоли в канал сокета для сервера
-                out.printf(">>>%s[%s]: %s\n", getUserName(), socketClient.getPort(), msg);
+                out.println(msg);
                 out.flush();
                 System.out.println("Вы:" + msg);
                 Thread.sleep(1000);

@@ -31,6 +31,8 @@ public class MonoThreadClientHandler implements Runnable {
             PrintWriter out = new PrintWriter(clientDialog.getOutputStream(), true);
             BufferedReader in = new BufferedReader(new InputStreamReader(clientDialog.getInputStream()));
             System.out.println("Data для приема и вывода создана");
+            final String name = in.readLine() + "[" + clientDialog.getPort() + "]";
+            System.out.printf(">>К чату подключился: >>%s\n", name);
             while (!clientDialog.isClosed()) {
 //                String msg = in.readUTF();
                 final String msg = in.readLine();
@@ -48,11 +50,10 @@ public class MonoThreadClientHandler implements Runnable {
                 }
                 //не получили выход, значит работаем
                 System.out.println("Сервер готов записывать....");
-//                out.writeUTF("Сервер ожидает - " + msg + " - ОК");
-                out.println(msg + " - ОК");
-                LOGGER.log(Level.INFO, msg);
+                String msgAndUser = name + ":" + msg;
+                out.println(">>>" + msgAndUser + " - ОК");
+                LOGGER.log(Level.INFO, msgAndUser);
                 System.out.println("Сервер записал сообщение");
-                //освобождаем буфер
                 out.flush();
             }
             in.close();
