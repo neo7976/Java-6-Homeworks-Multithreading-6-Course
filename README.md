@@ -44,3 +44,35 @@
 8. Протестировать сервер при подключении нескольких клиентов;
 9. Написать README.md к проекту;
 10. Отправить на проверку.
+
+# Описание предоставленного решения к проекту
+
+## [Сервер](https://github.com/neo7976/Java-6-Homeworks-Multithreading-6-Course/blob/f760b0fcda2aef80ee5156e9400f169501a30174/src/main/java/Server.java)
+### Сервер используется для принятия подключений пользователей и получения от них сообщений
+- [LOGGER](https://github.com/neo7976/Java-6-Homeworks-Multithreading-6-Course/blob/5bff8cd39e02f240c97360c8128aedfb8c4ca5b7/src/main/java/Server.java#L17-L26) служит для записи в файл о запуске сервера и принятия сообщений от пользоваталей, также имемется записи его настройки в [файле](https://github.com/neo7976/Java-6-Homeworks-Multithreading-6-Course/blob/188fa9c71697029c2a08db616b0554a06a2deb99/src/main/resources/log.config)
+
+- Запись в файл [setting](https://github.com/neo7976/Java-6-Homeworks-Multithreading-6-Course/blob/5bff8cd39e02f240c97360c8128aedfb8c4ca5b7/src/main/java/Server.java#L33-L39) настроек сервера, откуда пользователь считывает настройки и подключается
+
+- Устанавливаем поток для принятия новых пользователей в [MonoThreadClientHandler](https://github.com/neo7976/Java-6-Homeworks-Multithreading-6-Course/blob/5bff8cd39e02f240c97360c8128aedfb8c4ca5b7/src/main/java/Server.java#L62-L71), откуда происходит дальнейшее чтение сообщений каждого польователя отдельно
+
+##  MonoThreadClientHandler - поток для обработки [сообщений](https://github.com/neo7976/Java-6-Homeworks-Multithreading-6-Course/blob/5bff8cd39e02f240c97360c8128aedfb8c4ca5b7/src/main/java/thread/MonoThreadClientHandler.java)
+
+- Получаем [имя пользователя](https://github.com/neo7976/Java-6-Homeworks-Multithreading-6-Course/blob/5bff8cd39e02f240c97360c8128aedfb8c4ca5b7/src/main/java/thread/MonoThreadClientHandler.java#L25-L26), чтобы знать, от кого приходят сообщений и под его именем записывать в файл сообщение
+
+- Получение и отправка [сообщений](https://github.com/neo7976/Java-6-Homeworks-Multithreading-6-Course/blob/5bff8cd39e02f240c97360c8128aedfb8c4ca5b7/src/main/java/thread/MonoThreadClientHandler.java#L27-L46) от пользователя, пока не поступила команда "/end"
+
+## [Client.java](https://github.com/neo7976/Java-6-Homeworks-Multithreading-6-Course/blob/5bff8cd39e02f240c97360c8128aedfb8c4ca5b7/src/main/java/thread/MonoThreadClientHandler.java#L27-L46)
+
+- Считываем [settings](https://github.com/neo7976/Java-6-Homeworks-Multithreading-6-Course/blob/5bff8cd39e02f240c97360c8128aedfb8c4ca5b7/src/main/java/Client.java#L21-L36) настроек сервера для подключения
+
+- Производим авторизацию и передаем серверу [имя пользователя](https://github.com/neo7976/Java-6-Homeworks-Multithreading-6-Course/blob/5bff8cd39e02f240c97360c8128aedfb8c4ca5b7/src/main/java/Client.java#L38-L49)
+
+- Посылаем сообщения серверу и получаем [ответ](https://github.com/neo7976/Java-6-Homeworks-Multithreading-6-Course/blob/5bff8cd39e02f240c97360c8128aedfb8c4ca5b7/src/main/java/Client.java#L53-L91) до момента ввода "/end", тогда происходит разоединение.
+
+## ClientTest.java (https://github.com/neo7976/Java-6-Homeworks-Multithreading-6-Course/blob/5bff8cd39e02f240c97360c8128aedfb8c4ca5b7/src/main/java/thread/ClientTest.java)
+
+- Поток для тестирования подключения нескольких пользователей, которые запускаются через [Main.java](https://github.com/neo7976/Java-6-Homeworks-Multithreading-6-Course/blob/5bff8cd39e02f240c97360c8128aedfb8c4ca5b7/src/main/java/Main.java)
+
+## Пример записи в файл сообщений от тестированных нескольких пользоваталей
+[Ссылка на log](https://github.com/neo7976/Java-6-Homeworks-Multithreading-6-Course/blob/188fa9c71697029c2a08db616b0554a06a2deb99/src/main/resources/log.start.log)
+
