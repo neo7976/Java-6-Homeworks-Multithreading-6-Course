@@ -13,9 +13,7 @@ import java.util.logging.Logger;
 public class Server {
 
     //todo потом подправить на все действующие потоки
-    public static final DateTimeFormatter dfm = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
     public static ExecutorService executeIt = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
-
     static Logger LOGGER;
 
     static {
@@ -28,9 +26,7 @@ public class Server {
     }
 
     public static void main(String[] args) {
-        MyLogger myLogger = MyLogger.getInstance();
-        LOGGER.log(Level.INFO, "Hello! Server start!");
-
+//        MyLogger myLogger = MyLogger.getInstance();
         String host = "127.0.0.1\n";
         int port = 1254;
 
@@ -38,7 +34,6 @@ public class Server {
             writer.write("host: " + host);
             writer.write("port: " + String.valueOf(port));
             writer.flush();
-
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -46,7 +41,9 @@ public class Server {
         try (ServerSocket serverSocket = new ServerSocket(port);
              BufferedReader bf = new BufferedReader(new InputStreamReader(System.in))) {
 //             Scanner sc = new Scanner(System.in)) {
-            System.out.println("Server socket created, command console reader for listen to server commands");
+            LOGGER.log(Level.INFO, "Привет! Сервер активен," +
+                    " ждёт консольных команд или подключение пользователей." +
+                    "Для завершения работы сервера наберите \"end\"");
             while (!serverSocket.isClosed()) {
                 //todo не работает завершение сервера
                 if (bf.ready()) {
