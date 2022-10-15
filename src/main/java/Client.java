@@ -52,7 +52,7 @@ public class Client {
 //            }
             while (true) {
                 // ждём консоли клиента на предмет появления в ней данных
-                System.out.println("Введите сообщение:");
+                System.out.println("Введите сообщение или /end для выхода из канала:");
                 String msg = scanner.nextLine();
                 Thread.sleep(1000);
 
@@ -81,7 +81,6 @@ public class Client {
                     msgFromServer(in);
                 }
             }
-// на выходе из цикла общения закрываем свои ресурсы
             System.out.println("Закрытие канала соединения - ВЫПОЛНЕНО.");
 
         } catch (

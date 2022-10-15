@@ -14,7 +14,7 @@ public class Server {
 
     //todo потом подправить на все действующие потоки
     public static final DateTimeFormatter dfm = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-    public static ExecutorService executeIt = Executors.newFixedThreadPool(10);
+    public static ExecutorService executeIt = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
     static Logger LOGGER;
 

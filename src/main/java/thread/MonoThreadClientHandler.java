@@ -8,15 +8,6 @@ import java.util.logging.Logger;
 public class MonoThreadClientHandler implements Runnable {
     private static Socket clientDialog;
     Logger LOGGER;
-//
-//    static {
-//        try (FileInputStream ins = new FileInputStream("src/main/resources/log.config")) {
-//            LogManager.getLogManager().readConfiguration(ins);
-//            LOGGER = Logger.getLogger(MonoThreadClientHandler.class.getName());
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
 
     public MonoThreadClientHandler(Socket client, Logger LOGGER) {
         MonoThreadClientHandler.clientDialog = client;
@@ -37,9 +28,6 @@ public class MonoThreadClientHandler implements Runnable {
 //                String msg = in.readUTF();
                 final String msg = in.readLine();
                 System.out.println("Прочитали сообщение: " + msg);
-
-                //todo доработать выход, так как цепляется имя,
-                // попробовать перебить и хранить здесь порт и имя пользователя
 
                 if (msg.equalsIgnoreCase("/end")) {
                     System.out.println("Подключение разорвано...");
