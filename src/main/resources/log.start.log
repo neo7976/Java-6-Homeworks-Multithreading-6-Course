@@ -1,0 +1,106 @@
+окт. 15, 2022 2:05:44 PM Server main
+INFO: Привет! Сервер активен, ждёт консольных команд или подключение пользователей.Для завершения работы сервера наберите "end"
+окт. 15, 2022 2:06:24 PM Server main
+INFO: Привет! Сервер активен, ждёт консольных команд или подключение пользователей.Для завершения работы сервера наберите "end"
+окт. 15, 2022 2:07:26 PM Server main
+INFO: Привет! Сервер активен, ждёт консольных команд или подключение пользователей.Для завершения работы сервера наберите "end"
+окт. 15, 2022 2:07:42 PM thread.MonoThreadClientHandler run
+INFO: pool-1-thread-1[9671]:Сообщение - 1
+окт. 15, 2022 2:07:42 PM thread.MonoThreadClientHandler run
+INFO: pool-1-thread-2[9672]:Сообщение - 1
+окт. 15, 2022 2:07:43 PM thread.MonoThreadClientHandler run
+INFO: pool-1-thread-3[9673]:Сообщение - 1
+окт. 15, 2022 2:07:43 PM thread.MonoThreadClientHandler run
+INFO: pool-1-thread-4[9674]:Сообщение - 1
+окт. 15, 2022 2:07:43 PM thread.MonoThreadClientHandler run
+INFO: pool-1-thread-5[9675]:Сообщение - 1
+окт. 15, 2022 2:07:43 PM thread.MonoThreadClientHandler run
+INFO: pool-1-thread-6[9676]:Сообщение - 1
+окт. 15, 2022 2:07:43 PM thread.MonoThreadClientHandler run
+INFO: pool-1-thread-7[9677]:Сообщение - 1
+окт. 15, 2022 2:07:44 PM thread.MonoThreadClientHandler run
+INFO: pool-1-thread-8[9678]:Сообщение - 1
+окт. 15, 2022 2:07:44 PM thread.MonoThreadClientHandler run
+INFO: pool-1-thread-9[9679]:Сообщение - 1
+окт. 15, 2022 2:07:44 PM thread.MonoThreadClientHandler run
+INFO: pool-1-thread-10[9680]:Сообщение - 1
+окт. 15, 2022 2:07:46 PM thread.MonoThreadClientHandler run
+INFO: pool-1-thread-1[9671]:Сообщение - 2
+окт. 15, 2022 2:07:46 PM thread.MonoThreadClientHandler run
+INFO: pool-1-thread-2[9672]:Сообщение - 2
+окт. 15, 2022 2:07:47 PM thread.MonoThreadClientHandler run
+INFO: pool-1-thread-3[9673]:Сообщение - 2
+окт. 15, 2022 2:07:47 PM thread.MonoThreadClientHandler run
+INFO: pool-1-thread-4[9674]:Сообщение - 2
+окт. 15, 2022 2:07:47 PM thread.MonoThreadClientHandler run
+INFO: pool-1-thread-5[9675]:Сообщение - 2
+окт. 15, 2022 2:07:47 PM thread.MonoThreadClientHandler run
+INFO: pool-1-thread-6[9676]:Сообщение - 2
+окт. 15, 2022 2:07:47 PM thread.MonoThreadClientHandler run
+INFO: pool-1-thread-7[9677]:Сообщение - 2
+окт. 15, 2022 2:07:48 PM thread.MonoThreadClientHandler run
+INFO: pool-1-thread-8[9678]:Сообщение - 2
+окт. 15, 2022 2:07:48 PM thread.MonoThreadClientHandler run
+INFO: pool-1-thread-9[9679]:Сообщение - 2
+окт. 15, 2022 2:07:48 PM thread.MonoThreadClientHandler run
+INFO: pool-1-thread-10[9680]:Сообщение - 2
+окт. 15, 2022 2:07:50 PM thread.MonoThreadClientHandler run
+INFO: pool-1-thread-1[9671]:Сообщение - 3
+окт. 15, 2022 2:07:50 PM thread.MonoThreadClientHandler run
+INFO: pool-1-thread-2[9672]:Сообщение - 3
+окт. 15, 2022 2:07:51 PM thread.MonoThreadClientHandler run
+INFO: pool-1-thread-3[9673]:Сообщение - 3
+окт. 15, 2022 2:07:51 PM thread.MonoThreadClientHandler run
+INFO: pool-1-thread-4[9674]:Сообщение - 3
+окт. 15, 2022 2:07:51 PM thread.MonoThreadClientHandler run
+INFO: pool-1-thread-5[9675]:Сообщение - 3
+окт. 15, 2022 2:07:51 PM thread.MonoThreadClientHandler run
+INFO: pool-1-thread-6[9676]:Сообщение - 3
+окт. 15, 2022 2:07:51 PM thread.MonoThreadClientHandler run
+INFO: pool-1-thread-7[9677]:Сообщение - 3
+окт. 15, 2022 2:07:52 PM thread.MonoThreadClientHandler run
+INFO: pool-1-thread-8[9678]:Сообщение - 3
+окт. 15, 2022 2:07:52 PM thread.MonoThreadClientHandler run
+INFO: pool-1-thread-9[9679]:Сообщение - 3
+окт. 15, 2022 2:07:52 PM thread.MonoThreadClientHandler run
+INFO: pool-1-thread-10[9680]:Сообщение - 3
+окт. 15, 2022 2:07:54 PM thread.MonoThreadClientHandler run
+INFO: pool-1-thread-1[9671]:Сообщение - 4
+окт. 15, 2022 2:07:54 PM thread.MonoThreadClientHandler run
+INFO: pool-1-thread-2[9672]:Сообщение - 4
+окт. 15, 2022 2:07:55 PM thread.MonoThreadClientHandler run
+INFO: pool-1-thread-3[9673]:Сообщение - 4
+окт. 15, 2022 2:07:55 PM thread.MonoThreadClientHandler run
+INFO: pool-1-thread-4[9674]:Сообщение - 4
+окт. 15, 2022 2:07:55 PM thread.MonoThreadClientHandler run
+INFO: pool-1-thread-5[9675]:Сообщение - 4
+окт. 15, 2022 2:07:55 PM thread.MonoThreadClientHandler run
+INFO: pool-1-thread-6[9676]:Сообщение - 4
+окт. 15, 2022 2:07:55 PM thread.MonoThreadClientHandler run
+INFO: pool-1-thread-7[9677]:Сообщение - 4
+окт. 15, 2022 2:07:56 PM thread.MonoThreadClientHandler run
+INFO: pool-1-thread-8[9678]:Сообщение - 4
+окт. 15, 2022 2:07:56 PM thread.MonoThreadClientHandler run
+INFO: pool-1-thread-9[9679]:Сообщение - 4
+окт. 15, 2022 2:07:56 PM thread.MonoThreadClientHandler run
+INFO: pool-1-thread-10[9680]:Сообщение - 4
+окт. 15, 2022 2:07:58 PM thread.MonoThreadClientHandler run
+INFO: pool-1-thread-1[9671]:Сообщение - 5
+окт. 15, 2022 2:07:58 PM thread.MonoThreadClientHandler run
+INFO: pool-1-thread-2[9672]:Сообщение - 5
+окт. 15, 2022 2:07:59 PM thread.MonoThreadClientHandler run
+INFO: pool-1-thread-3[9673]:Сообщение - 5
+окт. 15, 2022 2:07:59 PM thread.MonoThreadClientHandler run
+INFO: pool-1-thread-4[9674]:Сообщение - 5
+окт. 15, 2022 2:07:59 PM thread.MonoThreadClientHandler run
+INFO: pool-1-thread-5[9675]:Сообщение - 5
+окт. 15, 2022 2:07:59 PM thread.MonoThreadClientHandler run
+INFO: pool-1-thread-6[9676]:Сообщение - 5
+окт. 15, 2022 2:07:59 PM thread.MonoThreadClientHandler run
+INFO: pool-1-thread-7[9677]:Сообщение - 5
+окт. 15, 2022 2:08:00 PM thread.MonoThreadClientHandler run
+INFO: pool-1-thread-8[9678]:Сообщение - 5
+окт. 15, 2022 2:08:00 PM thread.MonoThreadClientHandler run
+INFO: pool-1-thread-9[9679]:Сообщение - 5
+окт. 15, 2022 2:08:00 PM thread.MonoThreadClientHandler run
+INFO: pool-1-thread-10[9680]:Сообщение - 5
