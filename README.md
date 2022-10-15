@@ -55,7 +55,7 @@
 
 - Устанавливаем поток для принятия новых пользователей в [MonoThreadClientHandler](https://github.com/neo7976/Java-6-Homeworks-Multithreading-6-Course/blob/5bff8cd39e02f240c97360c8128aedfb8c4ca5b7/src/main/java/Server.java#L62-L71), откуда происходит дальнейшее чтение сообщений каждого польователя отдельно
 
-##  MonoThreadClientHandler - поток для обработки [сообщений](https://github.com/neo7976/Java-6-Homeworks-Multithreading-6-Course/blob/5bff8cd39e02f240c97360c8128aedfb8c4ca5b7/src/main/java/thread/MonoThreadClientHandler.java)
+##  MonoThreadClientHandler.java - поток для обработки [сообщений](https://github.com/neo7976/Java-6-Homeworks-Multithreading-6-Course/blob/5bff8cd39e02f240c97360c8128aedfb8c4ca5b7/src/main/java/thread/MonoThreadClientHandler.java)
 
 - Получаем [имя пользователя](https://github.com/neo7976/Java-6-Homeworks-Multithreading-6-Course/blob/5bff8cd39e02f240c97360c8128aedfb8c4ca5b7/src/main/java/thread/MonoThreadClientHandler.java#L25-L26), чтобы знать, от кого приходят сообщений и под его именем записывать в файл сообщение
 
@@ -69,7 +69,7 @@
 
 - Посылаем сообщения серверу и получаем [ответ](https://github.com/neo7976/Java-6-Homeworks-Multithreading-6-Course/blob/5bff8cd39e02f240c97360c8128aedfb8c4ca5b7/src/main/java/Client.java#L53-L91) до момента ввода "/end", тогда происходит разоединение.
 
-## ClientTest.java (https://github.com/neo7976/Java-6-Homeworks-Multithreading-6-Course/blob/5bff8cd39e02f240c97360c8128aedfb8c4ca5b7/src/main/java/thread/ClientTest.java)
+## [ClientTest.java](https://github.com/neo7976/Java-6-Homeworks-Multithreading-6-Course/blob/5bff8cd39e02f240c97360c8128aedfb8c4ca5b7/src/main/java/thread/ClientTest.java)
 
 - Поток для тестирования подключения нескольких пользователей, которые запускаются через [Main.java](https://github.com/neo7976/Java-6-Homeworks-Multithreading-6-Course/blob/5bff8cd39e02f240c97360c8128aedfb8c4ca5b7/src/main/java/Main.java)
 
