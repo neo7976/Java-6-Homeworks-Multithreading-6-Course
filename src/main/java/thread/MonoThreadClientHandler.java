@@ -1,17 +1,21 @@
 package thread;
 
+import log.MyLogger;
+
 import java.io.*;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class MonoThreadClientHandler implements Runnable {
+    private final MyLogger myLogger;
     private static Socket clientDialog;
     Logger LOGGER;
 
     public MonoThreadClientHandler(Socket client, Logger LOGGER) {
         MonoThreadClientHandler.clientDialog = client;
         this.LOGGER = LOGGER;
+        myLogger = MyLogger.getInstance();
     }
 
     @Override
@@ -27,7 +31,7 @@ public class MonoThreadClientHandler implements Runnable {
             while (!clientDialog.isClosed()) {
 //                String msg = in.readUTF();
                 final String msg = in.readLine();
-                System.out.println("Прочитали сообщение: " + msg);
+                System.out.println("Прочитали сообщение от " + name +": " + msg);
 
                 if (msg.equalsIgnoreCase("/end")) {
                     System.out.println("Подключение разорвано...");
@@ -40,7 +44,8 @@ public class MonoThreadClientHandler implements Runnable {
                 System.out.println("Сервер готов записывать....");
                 String msgAndUser = name + ":" + msg;
                 out.println(">>>" + msgAndUser + " - ОК");
-                LOGGER.log(Level.INFO, msgAndUser);
+//                LOGGER.log(Level.INFO, msgAndUser);
+                myLogger.log(name, msg);
                 System.out.println("Сервер записал сообщение");
                 out.flush();
             }
@@ -51,6 +56,5 @@ public class MonoThreadClientHandler implements Runnable {
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
-
     }
 }

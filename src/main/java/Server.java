@@ -26,7 +26,7 @@ public class Server {
     }
 
     public static void main(String[] args) {
-//        MyLogger myLogger = MyLogger.getInstance();
+//        log.MyLogger myLogger = log.MyLogger.getInstance();
         String host = "127.0.0.1\n";
         int port = 1254;
 
