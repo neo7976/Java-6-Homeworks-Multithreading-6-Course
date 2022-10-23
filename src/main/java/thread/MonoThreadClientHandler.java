@@ -35,7 +35,6 @@ public class MonoThreadClientHandler implements Runnable {
                 if (msg.equalsIgnoreCase("/end")) {
                     System.out.println("Подключение разорвано...");
                     out.println("Сервер ожидает - " + msg + " - ОК");
-//                    out.writeUTF("Сервер ожидает - " + msg + " - ОК");
                     Thread.sleep(3000);
                     break;
                 }

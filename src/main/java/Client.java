@@ -1,10 +1,11 @@
+import thread.ThreadReadMessage;
+
 import java.io.*;
 import java.net.Socket;
 import java.util.Scanner;
 
 public class Client {
     private static String userName = "Аноним";
-    private static int count = -1;
 
     public static String getUserName() {
         return userName;
@@ -42,47 +43,19 @@ public class Client {
             System.out.println("Клиент подключился to socketClient.");
 
             Scanner scanner = new Scanner(System.in);
-            System.out.println("\nВведи свое имя для знакомства с сервером");
+            System.out.println("\nВведите свое имя для знакомства с сервером!\n" +
+                    "После вводите сообщения для отправки пользователям или /end для выхода из канала:");
             setUserName(scanner.nextLine());
             out.println(getUserName());
             out.flush();
             Thread.sleep(1000);
 
             //Поток для чтения новых сообщений
-            Thread send = new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    BufferedReader it = null;
-                    try {
-                        it = new BufferedReader(new FileReader("src/main/resources/myLog.log"));
-                        int innerCount = 0;
-                        String line;
-                        while (true) {
-                            while ((line = it.readLine()) != null) {
-                                innerCount++;
-                                //если читали и надо продолжить
-                                if (count > -1) {
-                                    if (innerCount > count) {
-                                        System.out.println(line);
-                                    }
-                                } else {
-                                    //читаем первый раз
-                                    System.out.println(line);
-                                }
-                            }
-                            count = innerCount;
-                            Thread.sleep(1000);
-                        }
-                    } catch (IOException | InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
+            ThreadReadMessage send = new ThreadReadMessage();
             send.start();
 
             while (true) {
                 // ждём консоли клиента на предмет появления в ней данных
-                System.out.println("Введите сообщение или /end для выхода из канала:");
                 String msg = scanner.nextLine();
                 Thread.sleep(1000);
 
@@ -91,21 +64,21 @@ public class Client {
 
 // ждём чтобы сервер успел прочесть сообщение из сокета и ответить
 // проверяем условие выхода из соединения
+                //todo при закрытие ломается сервер - возможно из-за ошибки закрытия потока чтения
                 if (msg.equalsIgnoreCase("/end")) {
-                    System.out.println("Client kill connections");
-                    Thread.sleep(2000);
+                    System.out.println("Клиент завершает подключение...");
+                    Thread.sleep(1000);
 // смотрим что нам ответил сервер на последок перед закрытием ресурсов)
                     if (in.read() > -1) {
                         msgFromServer(in);
                     }
                     break;
                 }
-
-// проверяем, что нам ответит сервер на сообщение(за предоставленное ему время в паузе он должен был успеть ответить)
                 if (in.read() > -1) {
                     msgFromServer(in);
                 }
             }
+            send.interrupt();
             System.out.println("Закрытие канала соединения - ВЫПОЛНЕНО.");
 
         } catch (
