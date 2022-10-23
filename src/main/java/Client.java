@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 public class Client {
     private static String userName = "Аноним";
+    private static int count = -1;
 
     public static String getUserName() {
         return userName;
@@ -52,14 +53,13 @@ public class Client {
 //            }
             while (true) {
                 // ждём консоли клиента на предмет появления в ней данных
+                readNewMessage();
                 System.out.println("Введите сообщение или /end для выхода из канала:");
                 String msg = scanner.nextLine();
                 Thread.sleep(1000);
 
                 out.println(msg);
                 out.flush();
-                System.out.println("Вы:" + msg);
-                Thread.sleep(1000);
 
 // ждём чтобы сервер успел прочесть сообщение из сокета и ответить
 // проверяем условие выхода из соединения
@@ -73,9 +73,6 @@ public class Client {
                     break;
                 }
 
-// если условие разъединения не достигнуто продолжаем работу
-                System.out.println("Ждём ответа от сервера...");
-                Thread.sleep(2000);
 // проверяем, что нам ответит сервер на сообщение(за предоставленное ему время в паузе он должен был успеть ответить)
                 if (in.read() > -1) {
                     msgFromServer(in);
@@ -84,15 +81,45 @@ public class Client {
             System.out.println("Закрытие канала соединения - ВЫПОЛНЕНО.");
 
         } catch (
-                IOException |
-                        InterruptedException e) {
+                IOException | InterruptedException e) {
             e.printStackTrace();
         }
     }
 
     private static void msgFromServer(BufferedReader in) throws IOException {
-        System.out.println("ожидание...");
+//        System.out.println("ожидание...");
         String msgServ = in.readLine();
         System.out.println(msgServ);
+        readNewMessage();
+    }
+
+    public static void readNewMessage() {
+        Thread send = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                BufferedReader it = null;
+                try {
+                    it = new BufferedReader(new FileReader("src/main/resources/myLog.log"));
+                    int innerCount = 0;
+                    String line;
+                    while ((line = it.readLine()) != null) {
+                        innerCount++;
+                        //если читали и надо продолжить
+                        if (count > -1) {
+                            if (innerCount > count) {
+                                System.out.println(line);
+                            }
+                        } else {
+                            //читаем первый раз
+                            System.out.println(line);
+                        }
+                    }
+                    count = innerCount;
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        send.start();
     }
 }

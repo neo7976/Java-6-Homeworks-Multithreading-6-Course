@@ -3,7 +3,6 @@ import thread.MonoThreadClientHandler;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.time.format.DateTimeFormatter;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.logging.Level;
@@ -12,7 +11,6 @@ import java.util.logging.Logger;
 
 public class Server {
 
-    //todo потом подправить на все действующие потоки
     public static ExecutorService executeIt = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
     static Logger LOGGER;
 

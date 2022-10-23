@@ -4,7 +4,6 @@ import log.MyLogger;
 
 import java.io.*;
 import java.net.Socket;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class MonoThreadClientHandler implements Runnable {
@@ -31,7 +30,7 @@ public class MonoThreadClientHandler implements Runnable {
             while (!clientDialog.isClosed()) {
 //                String msg = in.readUTF();
                 final String msg = in.readLine();
-                System.out.println("Прочитали сообщение от " + name +": " + msg);
+                System.out.println("Прочитали сообщение от " + name + ": " + msg);
 
                 if (msg.equalsIgnoreCase("/end")) {
                     System.out.println("Подключение разорвано...");
