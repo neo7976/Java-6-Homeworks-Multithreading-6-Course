@@ -37,7 +37,6 @@ public class Client {
         System.out.println("port подключения: " + port1);
 
         try (Socket socketClient = new Socket(host1, port1);
-//             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
              PrintWriter out = new PrintWriter(socketClient.getOutputStream(), true);
              BufferedReader in = new BufferedReader(new InputStreamReader(socketClient.getInputStream()))) {
             System.out.println("Клиент подключился to socketClient.");
@@ -48,12 +47,41 @@ public class Client {
             out.println(getUserName());
             out.flush();
             Thread.sleep(1000);
-//            if (in.read() > -1) {
-//                msgFromServer(in);
-//            }
+
+            //Поток для чтения новых сообщений
+            Thread send = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    BufferedReader it = null;
+                    try {
+                        it = new BufferedReader(new FileReader("src/main/resources/myLog.log"));
+                        int innerCount = 0;
+                        String line;
+                        while (true) {
+                            while ((line = it.readLine()) != null) {
+                                innerCount++;
+                                //если читали и надо продолжить
+                                if (count > -1) {
+                                    if (innerCount > count) {
+                                        System.out.println(line);
+                                    }
+                                } else {
+                                    //читаем первый раз
+                                    System.out.println(line);
+                                }
+                            }
+                            count = innerCount;
+                            Thread.sleep(1000);
+                        }
+                    } catch (IOException | InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+            send.start();
+
             while (true) {
                 // ждём консоли клиента на предмет появления в ней данных
-                readNewMessage();
                 System.out.println("Введите сообщение или /end для выхода из канала:");
                 String msg = scanner.nextLine();
                 Thread.sleep(1000);
@@ -87,39 +115,6 @@ public class Client {
     }
 
     private static void msgFromServer(BufferedReader in) throws IOException {
-//        System.out.println("ожидание...");
         String msgServ = in.readLine();
-        System.out.println(msgServ);
-        readNewMessage();
-    }
-
-    public static void readNewMessage() {
-        Thread send = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                BufferedReader it = null;
-                try {
-                    it = new BufferedReader(new FileReader("src/main/resources/myLog.log"));
-                    int innerCount = 0;
-                    String line;
-                    while ((line = it.readLine()) != null) {
-                        innerCount++;
-                        //если читали и надо продолжить
-                        if (count > -1) {
-                            if (innerCount > count) {
-                                System.out.println(line);
-                            }
-                        } else {
-                            //читаем первый раз
-                            System.out.println(line);
-                        }
-                    }
-                    count = innerCount;
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-        send.start();
     }
 }
