@@ -1,3 +1,5 @@
+import thread.ThreadReadMessage;
+
 import java.io.*;
 import java.net.Socket;
 import java.util.Scanner;
@@ -36,63 +38,53 @@ public class Client {
         System.out.println("port подключения: " + port1);
 
         try (Socket socketClient = new Socket(host1, port1);
-//             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
              PrintWriter out = new PrintWriter(socketClient.getOutputStream(), true);
              BufferedReader in = new BufferedReader(new InputStreamReader(socketClient.getInputStream()))) {
             System.out.println("Клиент подключился to socketClient.");
 
             Scanner scanner = new Scanner(System.in);
-            System.out.println("\nВведи свое имя для знакомства с сервером");
+            System.out.println("\nВведите свое имя для знакомства с сервером!\n" +
+                    "После вводите сообщения для отправки пользователям или /end для выхода из канала:");
             setUserName(scanner.nextLine());
             out.println(getUserName());
             out.flush();
             Thread.sleep(1000);
-//            if (in.read() > -1) {
-//                msgFromServer(in);
-//            }
+
+            //Поток для чтения новых сообщений
+            ThreadReadMessage send = new ThreadReadMessage();
+            send.start();
+
             while (true) {
                 // ждём консоли клиента на предмет появления в ней данных
-                System.out.println("Введите сообщение или /end для выхода из канала:");
                 String msg = scanner.nextLine();
-                Thread.sleep(1000);
-
                 out.println(msg);
                 out.flush();
-                System.out.println("Вы:" + msg);
-                Thread.sleep(1000);
 
 // ждём чтобы сервер успел прочесть сообщение из сокета и ответить
 // проверяем условие выхода из соединения
                 if (msg.equalsIgnoreCase("/end")) {
-                    System.out.println("Client kill connections");
-                    Thread.sleep(2000);
+//                    System.out.println("Клиент завершает подключение...");
+//                    Thread.sleep(1000);
 // смотрим что нам ответил сервер на последок перед закрытием ресурсов)
                     if (in.read() > -1) {
                         msgFromServer(in);
                     }
                     break;
                 }
-
-// если условие разъединения не достигнуто продолжаем работу
-                System.out.println("Ждём ответа от сервера...");
-                Thread.sleep(2000);
-// проверяем, что нам ответит сервер на сообщение(за предоставленное ему время в паузе он должен был успеть ответить)
                 if (in.read() > -1) {
                     msgFromServer(in);
                 }
             }
+            send.interrupt();
             System.out.println("Закрытие канала соединения - ВЫПОЛНЕНО.");
 
         } catch (
-                IOException |
-                        InterruptedException e) {
+                IOException | InterruptedException e) {
             e.printStackTrace();
         }
     }
 
     private static void msgFromServer(BufferedReader in) throws IOException {
-        System.out.println("ожидание...");
         String msgServ = in.readLine();
-        System.out.println(msgServ);
     }
 }
