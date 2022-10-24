@@ -21,15 +21,12 @@ public class MonoThreadClientHandler implements Runnable {
     @Override
     public void run() {
         try {
-//            DataOutputStream out = new DataOutputStream(clientDialog.getOutputStream());
-//            DataInputStream in = new DataInputStream(clientDialog.getInputStream());
             PrintWriter out = new PrintWriter(clientDialog.getOutputStream(), true);
             BufferedReader in = new BufferedReader(new InputStreamReader(clientDialog.getInputStream()));
             System.out.println("Запись и чтение для приема и вывода создана");
             final String name = in.readLine() + "[" + clientDialog.getPort() + "]";
             LOGGER.log(Level.INFO, String.format(">>К чату подключился: >>%s", name));
             while (!clientDialog.isClosed()) {
-//                String msg = in.readUTF();
                 final String msg = in.readLine();
                 System.out.println("Прочитали сообщение от " + name + ": " + msg);
 

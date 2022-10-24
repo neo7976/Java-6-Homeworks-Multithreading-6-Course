@@ -42,7 +42,7 @@ public class Server {
                     " ждёт консольных команд или подключение пользователей." +
                     "Для завершения работы сервера наберите \"end\"");
             Thread readThread = new Thread(() -> {
-                while (true) {
+                while (!serverSocket.isClosed()) {
                     try {
                         Thread.sleep(1000);
                         if (sc.hasNextLine()) {
@@ -52,7 +52,6 @@ public class Server {
                             if (serverCommand.equalsIgnoreCase("end")) {
                                 System.out.println("Сервер инициализирует выход");
                                 serverSocket.close();
-                                Thread.currentThread().interrupt();
                                 break;
                             }
                         }
@@ -63,11 +62,10 @@ public class Server {
             });
             readThread.start();
 
-            while (!readThread.isInterrupted()) {
+            while (!serverSocket.isClosed()) {
                 //ждём подключения
                 Socket clientSocket = serverSocket.accept();
                 System.out.println("Есть подключение");
-
                 // после получения запроса на подключение сервер создаёт сокет
                 // для общения с клиентом и отправляет его в отдельную нить
                 // в Runnable(при необходимости можно создать Callable)
@@ -75,8 +73,9 @@ public class Server {
                 // продолжает общение от лица сервера
                 executeIt.execute(new MonoThreadClientHandler(clientSocket, LOGGER));
                 System.out.println("Подключение установлено");
-            }
 
+            }
+            System.out.println("Пытаемся выйти");
             //завершаем пол нитей после завершения всех нитей
             executeIt.shutdown();
         } catch (IOException e) {
