@@ -57,17 +57,14 @@ public class Client {
             while (true) {
                 // ждём консоли клиента на предмет появления в ней данных
                 String msg = scanner.nextLine();
-                Thread.sleep(1000);
-
                 out.println(msg);
                 out.flush();
 
 // ждём чтобы сервер успел прочесть сообщение из сокета и ответить
 // проверяем условие выхода из соединения
-                //todo при закрытие ломается сервер - возможно из-за ошибки закрытия потока чтения
                 if (msg.equalsIgnoreCase("/end")) {
-                    System.out.println("Клиент завершает подключение...");
-                    Thread.sleep(1000);
+//                    System.out.println("Клиент завершает подключение...");
+//                    Thread.sleep(1000);
 // смотрим что нам ответил сервер на последок перед закрытием ресурсов)
                     if (in.read() > -1) {
                         msgFromServer(in);

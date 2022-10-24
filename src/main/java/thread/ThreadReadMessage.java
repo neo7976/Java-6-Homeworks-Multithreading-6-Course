@@ -29,8 +29,9 @@ public class ThreadReadMessage extends Thread {
                 count = innerCount;
                 Thread.sleep(1000);
             }
+            it.close();
         } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
+            return;
         }
     }
 }
