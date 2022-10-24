@@ -27,14 +27,14 @@ public class MonoThreadClientHandler implements Runnable {
             BufferedReader in = new BufferedReader(new InputStreamReader(clientDialog.getInputStream()));
             System.out.println("Запись и чтение для приема и вывода создана");
             final String name = in.readLine() + "[" + clientDialog.getPort() + "]";
-            LOGGER.log(Level.INFO, String.format(">>К чату подключился: >>%s\n", name));
+            LOGGER.log(Level.INFO, String.format(">>К чату подключился: >>%s", name));
             while (!clientDialog.isClosed()) {
 //                String msg = in.readUTF();
                 final String msg = in.readLine();
                 System.out.println("Прочитали сообщение от " + name + ": " + msg);
 
                 if (msg.equalsIgnoreCase("/end")) {
-                    LOGGER.log(Level.INFO, String.format(">>Из чата вышел: >>%s\n", name));
+                    LOGGER.log(Level.INFO, String.format(">>Из чата вышел: >>%s", name));
                     out.println("Сервер ожидает - " + msg + " - ОК");
                     Thread.sleep(100);
                     break;
@@ -50,7 +50,7 @@ public class MonoThreadClientHandler implements Runnable {
             in.close();
             out.close();
             clientDialog.close();
-            LOGGER.log(Level.INFO, String.format(">>Закрытие подключения для пользователя [%s]- Выполнено\n", name));
+            LOGGER.log(Level.INFO, String.format(">>Закрытие подключения для пользователя [%s]- Выполнено", name));
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
