@@ -3,6 +3,7 @@ import thread.MonoThreadClientHandler;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.logging.Level;
@@ -36,29 +37,35 @@ public class Server {
         }
 
         try (ServerSocket serverSocket = new ServerSocket(port);
-             BufferedReader bf = new BufferedReader(new InputStreamReader(System.in))) {
-//             Scanner sc = new Scanner(System.in)) {
+             Scanner sc = new Scanner(System.in)) {
             LOGGER.log(Level.INFO, "Привет! Сервер активен," +
                     " ждёт консольных команд или подключение пользователей." +
                     "Для завершения работы сервера наберите \"end\"");
-            while (!serverSocket.isClosed()) {
-                //todo не работает завершение сервера
-                if (bf.ready()) {
-//                if (sc.hasNextLine()) {
-                    System.out.println("Сервер нашёл команды!");
-                    Thread.sleep(1000);
-                    String serverCommand = bf.readLine();
-//                    String serverCommand = sc.nextLine();
-                    if (serverCommand.equalsIgnoreCase("end")) {
-                        System.out.println("Сервер инициализирует выход");
-                        serverSocket.close();
-                        break;
+            Thread readThread = new Thread(() -> {
+                while (!serverSocket.isClosed()) {
+                    try {
+                        Thread.sleep(1000);
+                        if (sc.hasNextLine()) {
+                            System.out.println("Сервер нашёл команды!");
+                            Thread.sleep(1000);
+                            String serverCommand = sc.nextLine();
+                            if (serverCommand.equalsIgnoreCase("end")) {
+                                System.out.println("Сервер инициализирует выход");
+                                serverSocket.close();
+                                break;
+                            }
+                        }
+                    } catch (InterruptedException | IOException e) {
+                        e.printStackTrace();
                     }
                 }
+            });
+            readThread.start();
+
+            while (!serverSocket.isClosed()) {
                 //ждём подключения
                 Socket clientSocket = serverSocket.accept();
                 System.out.println("Есть подключение");
-
                 // после получения запроса на подключение сервер создаёт сокет
                 // для общения с клиентом и отправляет его в отдельную нить
                 // в Runnable(при необходимости можно создать Callable)
@@ -66,10 +73,12 @@ public class Server {
                 // продолжает общение от лица сервера
                 executeIt.execute(new MonoThreadClientHandler(clientSocket, LOGGER));
                 System.out.println("Подключение установлено");
+
             }
+            System.out.println("Пытаемся выйти");
             //завершаем пол нитей после завершения всех нитей
             executeIt.shutdown();
-        } catch (IOException | InterruptedException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

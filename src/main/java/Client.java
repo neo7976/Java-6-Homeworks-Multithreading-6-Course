@@ -60,12 +60,7 @@ public class Client {
                 out.println(msg);
                 out.flush();
 
-// ждём чтобы сервер успел прочесть сообщение из сокета и ответить
-// проверяем условие выхода из соединения
                 if (msg.equalsIgnoreCase("/end")) {
-//                    System.out.println("Клиент завершает подключение...");
-//                    Thread.sleep(1000);
-// смотрим что нам ответил сервер на последок перед закрытием ресурсов)
                     if (in.read() > -1) {
                         msgFromServer(in);
                     }
