@@ -19,7 +19,7 @@ public class MyLogger {
 
     public String log(String userName, String msg) {
         frag.put(userName, frag.getOrDefault(userName, 0) + 1);
-        String s = String.format("[%s %3d]\n (%d)-> %s: %s\n",
+        String s = String.format("[%s %3d]\n(%d)-> %s: %s\n",
                 dtf.format(LocalDateTime.now()),
                 num.incrementAndGet(),
                 frag.get(userName),

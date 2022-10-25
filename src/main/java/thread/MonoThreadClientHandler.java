@@ -1,18 +1,17 @@
 package thread;
 
 import log.MyLogger;
+import log.ServLogger;
 
 import java.io.*;
 import java.net.Socket;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class MonoThreadClientHandler implements Runnable {
     private final MyLogger myLogger;
     private static Socket clientDialog;
-    Logger LOGGER;
+    ServLogger LOGGER;
 
-    public MonoThreadClientHandler(Socket client, Logger LOGGER) {
+    public MonoThreadClientHandler(Socket client, ServLogger LOGGER) {
         MonoThreadClientHandler.clientDialog = client;
         this.LOGGER = LOGGER;
         myLogger = MyLogger.getInstance();
@@ -24,14 +23,18 @@ public class MonoThreadClientHandler implements Runnable {
             PrintWriter out = new PrintWriter(clientDialog.getOutputStream(), true);
             BufferedReader in = new BufferedReader(new InputStreamReader(clientDialog.getInputStream()));
             System.out.println("Запись и чтение для приема и вывода создана");
+
             final String name = in.readLine() + "[" + clientDialog.getPort() + "]";
-            LOGGER.log(Level.INFO, String.format(">>К чату подключился: >>%s", name));
+            LOGGER.log("Новый пользователь", LOGGER.getAnsiGreen(),
+                    String.format(">>%s", name));
+
             while (!clientDialog.isClosed()) {
                 final String msg = in.readLine();
                 System.out.println("Прочитали сообщение от " + name + ": " + msg);
 
                 if (msg.equalsIgnoreCase("/end")) {
-                    LOGGER.log(Level.INFO, String.format(">>Из чата вышел: >>%s", name));
+                    LOGGER.log("Покинул чат", LOGGER.getAnsiRed(),
+                            String.format(">>%s", name));
                     out.println("Сервер ожидает - " + msg + " - ОК");
                     Thread.sleep(1000);
                     break;
@@ -47,7 +50,8 @@ public class MonoThreadClientHandler implements Runnable {
             in.close();
             out.close();
             clientDialog.close();
-            LOGGER.log(Level.INFO, String.format(">>Закрытие подключения для пользователя [%s]- Выполнено", name));
+            LOGGER.log("Закрытие канала с пользователем", LOGGER.getAnsiPurple(),
+                    String.format(">>[%s]- Выполнено", name));
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
