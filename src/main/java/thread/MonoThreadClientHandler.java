@@ -33,7 +33,7 @@ public class MonoThreadClientHandler implements Runnable {
                 if (msg.equalsIgnoreCase("/end")) {
                     LOGGER.log(Level.INFO, String.format(">>Из чата вышел: >>%s", name));
                     out.println("Сервер ожидает - " + msg + " - ОК");
-                    Thread.sleep(100);
+                    Thread.sleep(1000);
                     break;
                 }
                 //не получили выход, значит работаем

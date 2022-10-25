@@ -61,9 +61,10 @@ public class Client {
                 out.flush();
 
                 if (msg.equalsIgnoreCase("/end")) {
-                    if (in.read() > -1) {
-                        msgFromServer(in);
-                    }
+                    Thread.sleep(1000);
+//                    if (in.read() > -1) {
+//                        msgFromServer(in);
+//                    }
                     break;
                 }
                 if (in.read() > -1) {

@@ -26,40 +26,33 @@ public class ClientTest implements Runnable {
              BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
             System.out.println("Клиент подключился to socketClient.");
 
-            System.out.println("\nВведи свое имя для знакомства с сервером");
+            System.out.println("\nВведите свое имя для знакомства с сервером!\n" +
+                    "После вводите сообщения для отправки пользователям или /end для выхода из канала:");
             String name = Thread.currentThread().getName();
             out.println(name);
             out.flush();
             Thread.sleep(1000);
-
+            ThreadReadMessage send = new ThreadReadMessage();
+            send.start();
             for (int i = 1; i <= 5; i++) {
-                System.out.println("Введите сообщение или /end для выхода из канала:");
                 String msg = "Сообщение - " + i;
-                Thread.sleep(1000);
                 out.println(msg);
                 out.flush();
-                System.out.println("Вы:" + msg);
                 Thread.sleep(1000);
-                System.out.println("Ждём ответа от сервера...");
-                Thread.sleep(2000);
                 if (in.read() > -1) {
                     msgFromServer(in);
                 }
             }
             String msg = "/end";
-            Thread.sleep(1000);
             out.println(msg);
             out.flush();
-            System.out.println("Вы:" + msg);
             Thread.sleep(1000);
-            System.out.println("Ждём ответа от сервера...");
-            Thread.sleep(2000);
             if (msg.equalsIgnoreCase("/end")) {
                 System.out.println("Client kill connections");
-                Thread.sleep(2000);
-                if (in.read() > -1) {
-                    msgFromServer(in);
-                }
+                send.interrupt();
+//                if (in.read() > -1) {
+//                    msgFromServer(in);
+//                }
             }
             System.out.println("Закрытие канала соединения - ВЫПОЛНЕНО.");
         } catch (
@@ -69,9 +62,7 @@ public class ClientTest implements Runnable {
     }
 
     private void msgFromServer(BufferedReader in) throws IOException {
-        System.out.println("ожидание...");
         String msgServ = in.readLine();
-        System.out.println(msgServ);
     }
 }
 

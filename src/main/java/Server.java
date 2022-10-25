@@ -51,6 +51,7 @@ public class Server {
                             String serverCommand = sc.nextLine();
                             if (serverCommand.equalsIgnoreCase("end")) {
                                 System.out.println("Сервер инициализирует выход");
+                                executeIt.shutdown();
                                 serverSocket.close();
                                 break;
                             }
@@ -73,7 +74,6 @@ public class Server {
                 // продолжает общение от лица сервера
                 executeIt.execute(new MonoThreadClientHandler(clientSocket, LOGGER));
                 System.out.println("Подключение установлено");
-
             }
             System.out.println("Пытаемся выйти");
             //завершаем пол нитей после завершения всех нитей
