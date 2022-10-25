@@ -77,5 +77,7 @@
 - Поток для тестирования подключения нескольких пользователей, которые запускаются через [Main.java](https://github.com/neo7976/Java-6-Homeworks-Multithreading-6-Course/blob/abb732216266eeb5221c565e48a74bc1e4baa2bc/src/main/java/Main.java)
 
 ## Пример записи в файл сообщений от тестированных нескольких пользоваталей
-[Ссылка на log](https://github.com/neo7976/Java-6-Homeworks-Multithreading-6-Course/blob/188fa9c71697029c2a08db616b0554a06a2deb99/src/main/resources/log.start.log)
+![](/src/main/resources/logUser.png)
+## Пример записи в файл сервера от тестированных нескольких пользоваталей
+![](/src/main/resources/logServ.png)
 
